@@ -1,8 +1,7 @@
 ## Php Image Generator
 
-Another service for generate images.
+Another service for generate images (randomizer).
 
 Steps:
-1. Install Gmagick:
-    1) apt-get update
-    2) apt-get install php-gmagick
+1. docker build
+2. docker-compose up -d
