@@ -18,22 +18,6 @@ services:
     networks:
       - image_generator
 
-  db:
-    image: mysql:5.7
-    container_name: image_generator-db
-    restart: unless-stopped
-    environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - ./docker/7.4/mysql:/docker-entrypoint-initdb.d
-    networks:
-      - image_generator
-
   nginx:
     image: nginx:alpine
     container_name: image_generator-nginx
