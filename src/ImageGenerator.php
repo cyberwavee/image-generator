@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Api;
+namespace Cyberwavee\ImageGenerator;
 
 use Imagick;
 use ImagickDraw;
 
-class ImageGeneratorController
+class ImageGenerator
 {
     public function generateImage()
     {
