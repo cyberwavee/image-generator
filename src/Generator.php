@@ -7,7 +7,7 @@ namespace Cyberwavee\ImageGenerator;
 use Imagick;
 use ImagickDraw;
 
-class ImageGenerator
+class Generator
 {
     public function generateImage()
     {
