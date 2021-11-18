@@ -13,7 +13,6 @@
         "php": ">=7.4",
         "ext-gd": "*",
         "ext-json": "*",
-        "ext-zip": "*",
         "ext-dom": "*"
     },
     "autoload": {
