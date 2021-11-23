@@ -9,46 +9,62 @@ use ImagickDraw;
 
 class Generator
 {
-    public function generateImage()
+    protected ImagickDraw $imagickDraw;
+
+    protected Imagick $gmagick;
+
+    public function __construct()
     {
-        Imagick::getHomeURL();
+        $this->imagickDraw = new ImagickDraw();
+        $this->gmagick = new Imagick();
+    }
 
-        // Создаем объект GmagickDraw
-        $draw = new ImagickDraw();
+    public function generateImage(): array
+    {
+        /** Set color lines */
+        $this->imagickDraw->setFillColor('red');
+        /** Set width and height of the image */
+        $this->imagickDraw->setStrokeWidth(1);
+        /** Draw lines */
+        $this->drawFigure('line', 40, rand(0, 500), rand(0, 500), rand(0, 500), rand(0, 500));
 
-// Установить цвет
-        $draw->setFillColor('red');
+        $this->imagickDraw->setFillColor('green');
+        $this->drawFigure('rectangle', 5, rand(0, 500), rand(0, 500), rand(0, 500), rand(0, 500));
 
-// Устанавливаем ширину и высоту изображения
-        $draw->setStrokeWidth(1);
+        $this->gmagick->newImage(500, 500, 'White');
+        $this->gmagick->setImageFormat("png");
 
-// Функция рисования линии
-        for($x = 0; $x < 40; $x++) {
-            $draw->line(rand(0, 100), rand(0, 60), rand(0, 500), rand(0, 500));
-            $draw->line(rand(0, 100), rand(0, 60), rand(0, 500), rand(0, 500));
-            $draw->line(rand(0, 100), rand(0, 60), rand(0, 500), rand(0, 500));
-            $draw->line(rand(0, 100), rand(0, 60), rand(0, 500), rand(0, 500));
+        $this->gmagick->drawImage($this->imagickDraw);
+
+        return [
+            'base64_image' => base64_encode($this->gmagick->getImageBlob())
+        ];
+    }
+
+    protected function drawFigure(string $figure, int $times, ?int $maxValueX1 = 100, ?int $maxValueY1 = 60, ?int $maxValueX2 = 500, ?int $maxValueY2 = 500)
+    {
+        for ($x = 0; $x < $times; $x++) {
+            $this->imagickDraw->{$figure}(
+                rand($this->getNumberWithRandomPrefix($maxValueX1), $this->getNumberWithRandomPrefix($maxValueX1)),
+                rand($this->getNumberWithRandomPrefix($maxValueY1), $this->getNumberWithRandomPrefix($maxValueY1)),
+                rand($this->getNumberWithRandomPrefix($maxValueX2), $this->getNumberWithRandomPrefix($maxValueX2)),
+                rand($this->getNumberWithRandomPrefix($maxValueY2), $this->getNumberWithRandomPrefix($maxValueY2))
+            );
+            $this->imagickDraw->{$figure}(
+                rand($this->getNumberWithRandomPrefix($maxValueX1), $this->getNumberWithRandomPrefix($maxValueX1)),
+                rand($this->getNumberWithRandomPrefix($maxValueY1), $this->getNumberWithRandomPrefix($maxValueY1)),
+                rand($this->getNumberWithRandomPrefix($maxValueX2), $this->getNumberWithRandomPrefix($maxValueX2)),
+                rand($this->getNumberWithRandomPrefix($maxValueY2), $this->getNumberWithRandomPrefix($maxValueY2))
+            );
+        }
+    }
+
+    protected function getNumberWithRandomPrefix(int $number)
+    {
+        if (rand(0, 100) > 50) {
+            return -$number;
         }
 
-        $gmagick = new Imagick();
-        $gmagick->newImage(500, 500, 'White');
-        $gmagick->setImageFormat("png");
-
-
-// Установить цвет
-        $draw->setFillColor('Black');
-        $draw->setFontSize(25);
-
-
-// Использование функции drawimage
-        $gmagick->drawImage($draw);
-        $gmagick->annotateImage($draw, 5, 120, 0, 'CyberWavee');
-
-        return response()->json(['image' => base64_encode($gmagick->getImageBlob())]);
-
-//        $data = GmagickDraw::line(2,3,2,1);
-//
-//        file_put_contents(storage_path('/tmp/image.png'), $data);
-
+        return $number;
     }
 }
