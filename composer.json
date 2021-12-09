@@ -13,7 +13,8 @@
         "php": ">=7.4",
         "ext-gd": "*",
         "ext-json": "*",
-        "ext-dom": "*"
+        "ext-dom": "*",
+        "ext-imagick": "*"
     },
     "autoload": {
         "psr-4": {
@@ -29,5 +30,5 @@
     },
     "prefer-stable": true,
     "minimum-stability": "dev",
-    "version": "1.0.1"
+    "version": "1.0.2"
 }
