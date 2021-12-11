@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Cyberwavee\ImageGenerator\Factory\ImageGenerators;
+namespace Cyberwavee\ImageGenerator\Factory\ImageArtGenerators;
 
 use Cyberwavee\ImageGenerator\Factory\ArtCreator;
-use Cyberwavee\ImageGenerator\Factory\ImageTypes\GeometricArt;
+use Cyberwavee\ImageGenerator\Factory\ImageArtTypes\GeometricArt;
 use Cyberwavee\ImageGenerator\Interfaces\Factory\ImageRenderInterface;
 
 class GeometricArtGenerator extends ArtCreator

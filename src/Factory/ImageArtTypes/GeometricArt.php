@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cyberwavee\ImageGenerator\Factory\ImageTypes;
+namespace Cyberwavee\ImageGenerator\Factory\ImageArtTypes;
 
 use Cyberwavee\ImageGenerator\Helpers\ColourHelper;
 use Cyberwavee\ImageGenerator\Interfaces\Factory\ImageTypes\GeometricArtInterface;
