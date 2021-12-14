@@ -6,6 +6,10 @@ namespace Cyberwavee\ImageGenerator\Factory\ImageArtTypes;
 
 use Cyberwavee\ImageGenerator\Helpers\ColourHelper;
 use Cyberwavee\ImageGenerator\Interfaces\Factory\ImageTypes\GeometricArtInterface;
+use Cyberwavee\ImageGenerator\Pipelines\ImageArt\ImageArtPipeline;
+use Cyberwavee\ImageGenerator\Pipes\ImageArt\GeometricArt\LinesDrawer;
+use Cyberwavee\ImageGenerator\Pipes\ImageArt\GeometricArt\SquaresDrawer;
+use ImagickException;
 use Imagick;
 use ImagickDraw;
 
@@ -24,68 +28,26 @@ class GeometricArt implements GeometricArtInterface
         $this->gmagick = new Imagick();
     }
 
+
     /**
      * @return string
-     * @throws \ImagickDrawException
-     * @throws \ImagickException
+     *
+     * @throws ImagickException
      */
     public function createImage(): string
     {
-        /** Set color lines */
-        $this->imagickDraw->setFillColor(ColourHelper::getRandomShapeColour());
-        /** Set width and height of the image */
-        $this->imagickDraw->setStrokeWidth(random_int(0, 10));
-        /** Draw lines */
-        $this->drawFigure('line', 40, rand(0, 500), rand(0, 500), rand(0, 500), rand(0, 500));
+        $pipeline = new ImageArtPipeline();
+        $pipeline->send([
+            'ImagickDraw' => $this->imagickDraw,
+        ])->setPipes([
+            new LinesDrawer(),
+            new SquaresDrawer(),
+        ])->thenReturn();
 
-        $this->imagickDraw->setFillColor(ColourHelper::getRandomShapeColour());
-        $this->drawFigure('rectangle', 5, rand(0, 500), rand(0, 500), rand(0, 500), rand(0, 500));
-
-        $this->gmagick->newImage(500, 500, ColourHelper::PALE_COLOUR);
+        $this->gmagick->newImage(2760, 1280, ColourHelper::PALE_COLOUR);
         $this->gmagick->setImageFormat("png");
-
         $this->gmagick->drawImage($this->imagickDraw);
 
         return base64_encode($this->gmagick->getImageBlob());
-    }
-
-    /**
-     * @param string $figure
-     * @param int $times
-     * @param int|null $maxValueX1
-     * @param int|null $maxValueY1
-     * @param int|null $maxValueX2
-     * @param int|null $maxValueY2
-     * @return void
-     */
-    protected function drawFigure(string $figure, int $times, ?int $maxValueX1 = 100, ?int $maxValueY1 = 60, ?int $maxValueX2 = 500, ?int $maxValueY2 = 500)
-    {
-        for ($x = 0; $x < $times; $x++) {
-            $this->imagickDraw->{$figure}(
-                rand($this->getNumberWithRandomPrefix($maxValueX1), $this->getNumberWithRandomPrefix($maxValueX1)),
-                rand($this->getNumberWithRandomPrefix($maxValueY1), $this->getNumberWithRandomPrefix($maxValueY1)),
-                rand($this->getNumberWithRandomPrefix($maxValueX2), $this->getNumberWithRandomPrefix($maxValueX2)),
-                rand($this->getNumberWithRandomPrefix($maxValueY2), $this->getNumberWithRandomPrefix($maxValueY2))
-            );
-            $this->imagickDraw->{$figure}(
-                rand($this->getNumberWithRandomPrefix($maxValueX1), $this->getNumberWithRandomPrefix($maxValueX1)),
-                rand($this->getNumberWithRandomPrefix($maxValueY1), $this->getNumberWithRandomPrefix($maxValueY1)),
-                rand($this->getNumberWithRandomPrefix($maxValueX2), $this->getNumberWithRandomPrefix($maxValueX2)),
-                rand($this->getNumberWithRandomPrefix($maxValueY2), $this->getNumberWithRandomPrefix($maxValueY2))
-            );
-        }
-    }
-
-    /**
-     * @param int $number
-     * @return int
-     */
-    protected function getNumberWithRandomPrefix(int $number): int
-    {
-        if (rand(0, 100) > 50) {
-            return -$number;
-        }
-
-        return $number;
     }
 }

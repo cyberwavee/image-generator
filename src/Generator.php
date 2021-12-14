@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Cyberwavee\ImageGenerator;
 
-use Cyberwavee\ImageGenerator\Exceptions\WrongImageArtTypeException;
+use Cyberwavee\ImageGenerator\Factory\ArtCreator;
 use Cyberwavee\ImageGenerator\Factory\ImageArtGenerators\GeometricArtGenerator;
 use Cyberwavee\ImageGenerator\Helpers\ImageArtHelper;
 use Throwable;
+use Exception;
 
 class Generator
 {
@@ -54,7 +55,7 @@ class Generator
     {
         throw_if(
             !in_array($config['image_art_type'], array_merge(ImageArtHelper::$imageArtTypes, [ImageArtHelper::RANDOM_ART_TYPE])),
-            WrongImageArtTypeException::class,
+            Exception::class,
             'Wrong image art type! Please, correct your config.'
         );
 
@@ -63,16 +64,17 @@ class Generator
 
     /**
      * @return array
-     * @throws WrongImageArtTypeException
+     * @throws Exception
      */
     public function generateImage(): array
     {
+        /** @var ArtCreator $imageGeneratorClass */
         switch ($this->getImageArtType()) {
             case ImageArtHelper::GEOMETRIC_ART_TYPE:
                 $imageGeneratorClass = GeometricArtGenerator::class;
                 break;
             default:
-                throw new WrongImageArtTypeException('Wrong image art type! Please, correct your config.');
+                throw new Exception('Wrong image art type! Please, correct your config.');
         }
 
         $imageGenerator = new $imageGeneratorClass(['gg' => 'gg123123wp11']);
