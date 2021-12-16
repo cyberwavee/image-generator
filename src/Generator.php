@@ -77,7 +77,7 @@ class Generator
                 throw new Exception('Wrong image art type! Please, correct your config.');
         }
 
-        $imageGenerator = new $imageGeneratorClass(['gg' => 'gg123123wp11']);
+        $imageGenerator = new $imageGeneratorClass([]);
         $base64Image = $imageGenerator->render();
 
         return [

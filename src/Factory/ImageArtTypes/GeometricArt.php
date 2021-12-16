@@ -21,13 +21,15 @@ class GeometricArt implements GeometricArtInterface
 
     protected Imagick $gmagick;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
         $this->data = $data;
         $this->imagickDraw = new ImagickDraw();
         $this->gmagick = new Imagick();
     }
-
 
     /**
      * @return string
