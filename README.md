@@ -1,3 +1,5 @@
+<p align="center"><img src="dist/images/template-images/generated_image_61bceed4cfc2a1639771860.png" width="600"></p>
+
 # <center>Php Image Generator</center>
 Another service for generate images (randomizer).
 
