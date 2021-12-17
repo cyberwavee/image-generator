@@ -30,6 +30,9 @@ class ColourHelper
     /** @var string */
     public const TWILIGHT_LILAC_PINK_COLOUR = '#020233';
 
+    /** @var string */
+    public const LIGHTGREEN_COLOUR = 'lightgreen';
+
     /** @var array */
     public static array $colours = [
         self::ROSE_RED_COLOUR,
@@ -40,6 +43,7 @@ class ColourHelper
         self::GHOST_WHITE_COLOUR,
         self::BLUE_SHADE_OF_BLACK_COLOUR,
         self::TWILIGHT_LILAC_PINK_COLOUR,
+        self::LIGHTGREEN_COLOUR,
     ];
 
     /** @var array */

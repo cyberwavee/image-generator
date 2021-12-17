@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Cyberwavee\ImageGenerator\Pipes\ImageArt\GeometricArt;
 
+use Closure;
 use Cyberwavee\ImageGenerator\Helpers\ColourHelper;
 use Cyberwavee\ImageGenerator\Helpers\ImageArtHelper;
 use Cyberwavee\ImageGenerator\Interfaces\ShapeDrawerInterface;
 use Cyberwavee\ImageGenerator\Support\Traits\CheckImageArtDataAttributes;
 use Throwable;
-use Closure;
 
-class SquaresDrawer implements ShapeDrawerInterface
+class PointsDrawer implements ShapeDrawerInterface
 {
     use CheckImageArtDataAttributes;
 
@@ -26,17 +26,12 @@ class SquaresDrawer implements ShapeDrawerInterface
     {
         $this->checkImageArtDataAttributes($data);
 
-        $data['ImagickDraw']->setFillColor(ColourHelper::getRandomShapeColour());
+        for ($x = 0; $x < 15000; $x++) {
+            $data['ImagickDraw']->setFillColor(ColourHelper::getRandomShapeColour());
 
-        for ($x = 0; $x < 42; $x++) {
-            $leftX = rand(0, ImageArtHelper::IMAGE_WIDTH);
-            $leftY = rand(0, ImageArtHelper::IMAGE_HEIGHT);
-
-            $data['ImagickDraw']->rectangle(
-                $leftX,
-                $leftY,
-                $leftX + rand(0, 80),
-                $leftY + rand(0, 65)
+            $data['ImagickDraw']->point(
+                rand(ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)), ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000))),
+                rand(ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)), ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)))
             );
         }
 

@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Cyberwavee\ImageGenerator\Pipes\ImageArt\GeometricArt;
 
 use Cyberwavee\ImageGenerator\Helpers\ColourHelper;
-use Cyberwavee\ImageGenerator\Interfaces\ShapeInterface;
+use Cyberwavee\ImageGenerator\Helpers\ImageArtHelper;
+use Cyberwavee\ImageGenerator\Interfaces\ShapeDrawerInterface;
 use Cyberwavee\ImageGenerator\Support\Traits\CheckImageArtDataAttributes;
 use Throwable;
 use Closure;
 
-class LinesDrawer implements ShapeInterface
+class LinesDrawer implements ShapeDrawerInterface
 {
     use CheckImageArtDataAttributes;
 
@@ -28,32 +29,19 @@ class LinesDrawer implements ShapeInterface
         /** Set color lines */
         $data['ImagickDraw']->setFillColor(ColourHelper::getRandomShapeColour());
 
-        /** Set width and height of the image */
-        $data['ImagickDraw']->setStrokeWidth(random_int(0, 60));
-
         /** Draw lines */
         for ($x = 0; $x < 46; $x++) {
+            /** Set width of the image */
+            $data['ImagickDraw']->setStrokeWidth(random_int(0, 800));
+
             $data['ImagickDraw']->line(
-                rand($this->getNumberWithRandomPrefix(rand(0, 1500)), $this->getNumberWithRandomPrefix(rand(0, 1500))),
-                rand($this->getNumberWithRandomPrefix(rand(0, 1500)), $this->getNumberWithRandomPrefix(rand(0, 1500))),
-                rand($this->getNumberWithRandomPrefix(rand(0, 1500)), $this->getNumberWithRandomPrefix(rand(0, 1500))),
-                rand($this->getNumberWithRandomPrefix(rand(0, 1500)), $this->getNumberWithRandomPrefix(rand(0, 1500)))
+                rand(ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)), ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000))),
+                rand(ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)), ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000))),
+                rand(ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)), ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000))),
+                rand(ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)), ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)))
             );
         }
 
         return $next($data);
-    }
-
-    /**
-     * @param int $number
-     * @return int
-     */
-    protected function getNumberWithRandomPrefix(int $number): int
-    {
-        if (rand(0, 100) > 50) {
-            return -$number;
-        }
-
-        return $number;
     }
 }

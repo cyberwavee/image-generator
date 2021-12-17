@@ -1,6 +1,10 @@
 # <center>Php Image Generator</center>
 Another service for generate images (randomizer).
 
+## <center>Requirements</center>
+* PHP >= 7.4
+* Imagick
+
 ## <center>Usage</center>
 ```php
 $config = [
