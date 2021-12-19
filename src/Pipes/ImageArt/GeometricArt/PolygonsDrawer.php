@@ -25,21 +25,17 @@ class PolygonsDrawer implements ShapeDrawerInterface
     public function handle(array $data, Closure $next): ?array
     {
         $this->checkImageArtDataAttributes($data);
+        $polygonShapesTimes = mt_rand(1, 100);
 
-        for ($x = 0; $x < 100; $x++) {
-            $data['ImagickDraw']->point(
-                rand(ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)), ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000))),
-                rand(ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)), ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)))
-            );
-
+        for ($x = 0; $x < $polygonShapesTimes; $x++) {
             $data['ImagickDraw']->setFillColor(ColourHelper::getRandomShapeColour());
             $data['ImagickDraw']->setStrokeMiterLimit(40 * 12);
 
             $points = [
-                ['x' => ImageArtHelper::getNumberWithRandomPrefix(rand(0, ImageArtHelper::IMAGE_WIDTH)), 'y' => ImageArtHelper::getNumberWithRandomPrefix(rand(0, ImageArtHelper::IMAGE_HEIGHT))],
-                ['x' => ImageArtHelper::getNumberWithRandomPrefix(rand(0, ImageArtHelper::IMAGE_WIDTH)), 'y' => ImageArtHelper::getNumberWithRandomPrefix(rand(0, ImageArtHelper::IMAGE_HEIGHT))],
-                ['x' => ImageArtHelper::getNumberWithRandomPrefix(rand(0, ImageArtHelper::IMAGE_WIDTH)), 'y' => ImageArtHelper::getNumberWithRandomPrefix(rand(0, ImageArtHelper::IMAGE_HEIGHT))],
-                ['x' => ImageArtHelper::getNumberWithRandomPrefix(rand(0, ImageArtHelper::IMAGE_WIDTH)), 'y' => ImageArtHelper::getNumberWithRandomPrefix(rand(0, ImageArtHelper::IMAGE_HEIGHT))],
+                ['x' => ImageArtHelper::getNumberWithRandomPrefix(mt_rand(0, ImageArtHelper::IMAGE_WIDTH)), 'y' => ImageArtHelper::getNumberWithRandomPrefix(mt_rand(0, ImageArtHelper::IMAGE_HEIGHT))],
+                ['x' => ImageArtHelper::getNumberWithRandomPrefix(mt_rand(0, ImageArtHelper::IMAGE_WIDTH)), 'y' => ImageArtHelper::getNumberWithRandomPrefix(mt_rand(0, ImageArtHelper::IMAGE_HEIGHT))],
+                ['x' => ImageArtHelper::getNumberWithRandomPrefix(mt_rand(0, ImageArtHelper::IMAGE_WIDTH)), 'y' => ImageArtHelper::getNumberWithRandomPrefix(mt_rand(0, ImageArtHelper::IMAGE_HEIGHT))],
+                ['x' => ImageArtHelper::getNumberWithRandomPrefix(mt_rand(0, ImageArtHelper::IMAGE_WIDTH)), 'y' => ImageArtHelper::getNumberWithRandomPrefix(mt_rand(0, ImageArtHelper::IMAGE_HEIGHT))],
             ];
 
             $data['ImagickDraw']->polygon($points);

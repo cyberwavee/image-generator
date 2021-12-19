@@ -25,18 +25,19 @@ class SquaresDrawer implements ShapeDrawerInterface
     public function handle(array $data, Closure $next): ?array
     {
         $this->checkImageArtDataAttributes($data);
+        $squareShapesTimes = mt_rand(5, 50);
 
         $data['ImagickDraw']->setFillColor(ColourHelper::getRandomShapeColour());
 
-        for ($x = 0; $x < 42; $x++) {
-            $leftX = rand(0, ImageArtHelper::IMAGE_WIDTH);
-            $leftY = rand(0, ImageArtHelper::IMAGE_HEIGHT);
+        for ($x = 0; $x < $squareShapesTimes; $x++) {
+            $leftX = mt_rand(0, ImageArtHelper::IMAGE_WIDTH);
+            $leftY = mt_rand(0, ImageArtHelper::IMAGE_HEIGHT);
 
             $data['ImagickDraw']->rectangle(
                 $leftX,
                 $leftY,
-                $leftX + rand(0, 80),
-                $leftY + rand(0, 65)
+                $leftX + mt_rand(0, 80),
+                $leftY + mt_rand(0, 65)
             );
         }
 

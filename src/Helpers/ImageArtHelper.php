@@ -39,7 +39,7 @@ class ImageArtHelper
      */
     public static function getNumberWithRandomPrefix(int $number): int
     {
-        if (rand(0, 100) > 50) {
+        if (mt_rand(0, 100) > 50) {
             return -$number;
         }
 

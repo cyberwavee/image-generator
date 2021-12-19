@@ -25,13 +25,14 @@ class PointsDrawer implements ShapeDrawerInterface
     public function handle(array $data, Closure $next): ?array
     {
         $this->checkImageArtDataAttributes($data);
+        $pointShapesTimes = mt_rand(5000, 15000);
 
-        for ($x = 0; $x < 15000; $x++) {
+        for ($x = 0; $x < $pointShapesTimes; $x++) {
             $data['ImagickDraw']->setFillColor(ColourHelper::getRandomShapeColour());
 
             $data['ImagickDraw']->point(
-                rand(ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)), ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000))),
-                rand(ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)), ImageArtHelper::getNumberWithRandomPrefix(rand(0, 3000)))
+                rand(ImageArtHelper::getNumberWithRandomPrefix(mt_rand(0, 3000)), ImageArtHelper::getNumberWithRandomPrefix(mt_rand(0, 3000))),
+                rand(ImageArtHelper::getNumberWithRandomPrefix(mt_rand(0, 3000)), ImageArtHelper::getNumberWithRandomPrefix(mt_rand(0, 3000)))
             );
         }
 

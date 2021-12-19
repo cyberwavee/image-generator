@@ -24,6 +24,13 @@ class GeometricArt implements GeometricArtInterface
 
     protected Imagick $gmagick;
 
+    protected array $pipes = [
+        PolygonsDrawer::class,
+        PointsDrawer::class,
+        LinesDrawer::class,
+        SquaresDrawer::class,
+    ];
+
     /**
      * @param array $data
      */
@@ -44,17 +51,30 @@ class GeometricArt implements GeometricArtInterface
         $pipeline = new ImageArtPipeline();
         $pipeline->send([
             'ImagickDraw' => $this->imagickDraw,
-        ])->setPipes([
-            new PolygonsDrawer(),
-            new PointsDrawer(),
-            new LinesDrawer(),
-            new SquaresDrawer(),
-        ])->thenReturn();
+        ])->setPipes($this->prepareShapePipes($this->pipes))
+            ->thenReturn();
 
         $this->gmagick->newImage(ImageArtHelper::IMAGE_WIDTH, ImageArtHelper::IMAGE_HEIGHT, ColourHelper::PALE_COLOUR);
         $this->gmagick->setImageFormat("png");
         $this->gmagick->drawImage($this->imagickDraw);
 
         return base64_encode($this->gmagick->getImageBlob());
+    }
+
+    /**
+     * @param array $shapePipes
+     *
+     * @return array
+     */
+    protected function prepareShapePipes(array $shapePipes): array
+    {
+        foreach ($shapePipes as $shapePipe) {
+            for ($x = 1; $x <= mt_rand(1, 2); $x++) {
+                $shapePipes[] = $shapePipe;
+            }
+        }
+        shuffle($shapePipes);
+
+        return $shapePipes;
     }
 }
